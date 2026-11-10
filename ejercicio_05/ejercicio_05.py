@@ -31,26 +31,41 @@ Requisitos
 
 
 def extraer_valores(datos):
-    pass
+    resultado = []
+    for dato in datos:
+        if isinstance(dato, list):
+            resultado.extend(extraer_valores(dato))
+        else:
+            resultado.append(dato) 
+    return resultado
 
 
 # ---------------------------------------------------------------------
 # Preguntas de análisis (responde debajo de cada pregunta)
 # ---------------------------------------------------------------------
 # 1. ¿Qué devuelve la función cuando recibe una lista vacía?
-#
+#   Devuelve una lista vacía 
 #
 # 2. ¿Qué diferencia hay entre incorporar un número e incorporar el
 #    resultado de una llamada recursiva?
+# para un número individual se utiliza .append() para agregar el elemento directamente a la lista.
+# para una sublista (llamada recursiva) se utiliza .extend(), lo que permite agregar todos los elementos de la sublista al resultado final, en 
+# lugar de agregar la sublista como un solo elemento
 #
 #
 # 3. Dibuja únicamente las llamadas a extraer_valores() para
 #    [1, [2, [], [1]], 4]. ¿Cuántas llamadas se realizan, incluyendo las
 #    de listas vacías?
+# 
+# 1. extraer_valores([1, [2, [], [1]], 4])  
+# 2. extraer_valores([2, [], [1]])         
+# 3. extraer_valores([])                  
+# 4. extraer_valores([1])                 
+# Total de llamadas: 4.
 #
 #
 # 4. ¿Por qué cada llamada necesita su propia lista de resultados?
-#
+# Cada llamada recursiva tiene su propio contexto y necesita mantener su propia lista de resultados para no interferir con las llamadas anteriores
 #
 
 
