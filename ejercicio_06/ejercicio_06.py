@@ -94,42 +94,58 @@ from ejercicio_05.ejercicio_05 import extraer_valores
 
 def sumar_cola(valores, i=0, acumulado=0):
     """Suma desde la posición i hasta el final, agregada a acumulado."""
-    pass
-
+    if i >= len(valores):
+        return acumulado
+    else:
+        return sumar_cola(valores, i + 1, acumulado + valores[i])
 
 # Parte B ---------------------------------------------------------------
 
 def reporte_sucursales(ventas):
-    pass
+    """Devuelve un reporte de ventas por sucursal."""
+    reporte = {"sucursales": [], "total_general": 0}
+    for nombre, registros in ventas.items():
+        valores = extraer_valores(registros)
+        cantidad_ventas = len(valores)
+        total = sumar_cola(valores)
+        reporte["sucursales"].append({
+            "nombre": nombre,
+            "cantidad_ventas": cantidad_ventas,
+            "total": total
+        })
+        reporte["total_general"] += total
+    return reporte
 
 
 # ---------------------------------------------------------------------
 # Preguntas de análisis (responde debajo de cada pregunta)
 # ---------------------------------------------------------------------
 # 1. ¿Qué devuelve ventas.items() en cada iteración?
-#
+#   devuelve una tupla (clave, valor) con el nombre de la sucursal y la lista de registros de ventas correspondiente a esa sucursal.
 #
 # 2. ¿Qué responsabilidad tiene cada una de estas funciones?
-#    extraer_valores():
-#    sumar_cola():
-#    reporte_sucursales():
+#    extraer_valores(): desanida las listas anidadas y devuelve una lista plana de valores numéricos.
+#    sumar_cola():suma los numeros de una lista plana desde la posición i hasta el final, agregando el resultado al acumulado.
+#    reporte_sucursales(): recorre el diccionario de ventas, utiliza las funciones anteriores para calcular la cantidad de ventas y el total
+#    por sucursal, y construye un reporte final con la información de todas las sucursales y el total general.
 #
-# 3. Completa la traza de sumar_cola([10, 20, 30]):
+# 3. Completa la traza de sumar_cola([10, 20, 30]): 
 #
 #    Llamada |  i  | acumulado
 #    --------|-----|----------
 #       1    |  0  |    0
-#       2    |     |
-#       3    |     |
-#       4    |     |
+#       2    |  1  |   10
+#       3    |  2  |   30
+#       4    |  3  |   60
 #
 # 4. ¿Por qué sumar_cola() es recursiva de cola?
-#
+# Porque la llamada recursiva es la última operación que se realiza en cada paso, y el resultado se pasa como parámetro a la siguiente llamada.
 #
 # 5. ¿En cuál de estas dos expresiones queda una suma pendiente después
 #    de la llamada?
 #    return valores[i] + sumar(valores, i + 1)
 #    return sumar_cola(valores, i + 1, acumulado + valores[i])
+# queda una suma pendiento en: return valores[i] + sumar(valores, i + 1)
 #
 #
 
